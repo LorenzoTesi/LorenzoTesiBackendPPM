@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestione Evento{% endblock %}
+
+{% block content %}
+<h2>{% if object %}Modifica Evento: {{ object.titolo }}{% else %}Crea un nuovo Evento{% endif %}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salva Evento</button>
+</form>
+
+<p style="margin-top: 20px;"><a href="{% url 'eventi:lista_eventi' %}">← Annulla e torna alla dashboard</a></p>
+{% endblock %}

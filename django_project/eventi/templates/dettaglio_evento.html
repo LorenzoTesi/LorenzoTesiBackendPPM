@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Dettaglio - {{ evento.titolo }}{% endblock %}
+
+{% block content %}
+<h2>{{ evento.titolo }}</h2>
+<p><strong>Organizzatore:</strong> {{ evento.organizzatore.username }}</p>
+<p><strong>Quando:</strong> {{ evento.data_ora|date:"d/m/Y H:i" }}</p>
+<p><strong>Dove:</strong> {{ evento.luogo }}</p>
+<p><strong>Posti occupati:</strong> {{ posti_occupati }} / {{ evento.capienza_massima }}</p>
+<p><strong>Descrizione:</strong></p>
+<p>{{ evento.descrizione }}</p>
+
+<hr>
+
+{% if user.is_organizer %}
+    {% if user == evento.organizzatore %}
+        <h3>Elenco Utenti Iscritti a questo evento:</h3>
+        {% if iscritti_username %}
+            <ul>
+                {% for username in iscritti_username %}
+                    <li>{{ username }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nessun utente si è ancora iscritto a questo evento.</p>
+        {% endif %}
+
+        <div style="margin-top: 25px;">
+            <a href="{% url 'eventi:modifica_evento' evento.id %}" style="padding: 10px; background-color: #e67e22; color: white; text-decoration: none; border-radius: 4px;">Modifica</a>
+            <a href="{% url 'eventi:elimina_evento' evento.id %}" style="padding: 10px; background-color: #c0392b; color: white; text-decoration: none; border-radius: 4px; margin-left: 10px;">Elimina</a>
+        </div>
+    {% endif %}
+{% else %}
+    <div style="margin-top: 25px;">
+        {% if gia_prenotato %}
+            <p style="color: #27ae60; font-weight: bold;">Sei iscritto a questo evento.</p>
+            <a href="{% url 'prenotazioni:cancella_prenotazione' evento.id %}" style="padding: 10px; background-color: #7f8c8d; color: white; text-decoration: none; border-radius: 4px;">Disiscriviti</a>
+        {% else %}
+            {% if posti_occupati >= evento.capienza_massima %}
+                <p style="color: red; font-weight: bold;">Posti esauriti!</p>
+            {% else %}
+                <a href="{% url 'prenotazioni:prenota_evento' evento.id %}" style="padding: 10px; background-color: #2ecc71; color: white; text-decoration: none; border-radius: 4px;">Iscriviti ora</a>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endif %}
+
+<p style="margin-top: 40px;"><a href="{% url 'eventi:lista_eventi' %}">← Torna alla Dashboard</a></p>
+{% endblock %}

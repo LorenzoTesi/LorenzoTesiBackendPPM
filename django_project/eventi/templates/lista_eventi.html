@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2>Pannello di Controllo: {% if user.is_organizer %}Organizzatore{% else %}Partecipante{% endif %}</h2>
+
+<form method="get" action="{% url 'eventi:lista_eventi' %}" style="margin-bottom: 30px;">
+    <input type="text" name="q" value="{{ query }}" placeholder="Cerca evento per titolo...">
+    <button type="submit">Cerca</button>
+    {% if query %}
+        <a href="{% url 'eventi:lista_eventi' %}" style="margin-left: 10px;">Azzera filtro</a>
+    {% endif %}
+</form>
+
+<hr>
+
+{% if user.is_organizer %}
+    <div style="margin-bottom: 20px;">
+        <a href="{% url 'eventi:crea_evento' %}" style="padding: 10px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;">+ Crea Nuovo Evento</a>
+    </div>
+
+    <h3>I Miei Eventi Creati</h3>
+    {% if eventi %}
+        <ul>
+        {% for evento in eventi %}
+            <li style="margin-bottom: 15px;">
+                <strong>{{ evento.titolo }}</strong> - {{ evento.data_ora|date:"d/m/Y H:i" }}
+                <div style="margin-top: 5px;">
+                    <a href="{% url 'eventi:dettaglio_evento' evento.id %}" style="padding: 5px; background-color: #2ecc71; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9em;">Vedi Info</a>
+                    <a href="{% url 'eventi:modifica_evento' evento.id %}" style="padding: 5px; background-color: #e67e22; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9em; margin-left: 5px;">Modifica</a>
+                    <a href="{% url 'eventi:elimina_evento' evento.id %}" style="padding: 5px; background-color: #c0392b; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9em; margin-left: 5px;">Elimina</a>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>{% if query %}Nessun evento corrisponde alla ricerca.{% else %}Non hai ancora creato nessun evento.{% endif %}</p>
+    {% endif %}
+
+{% else %}
+    {% if query %}
+        <h3>Risultati della ricerca per: "{{ query }}"</h3>
+        {% if risultati_ricerca %}
+            <ul>
+            {% for evento in risultati_ricerca %}
+                <li style="margin-bottom: 15px;">
+                    <strong>{{ evento.titolo }}</strong> (di {{ evento.organizzatore.username }}) - {{ evento.data_ora|date:"d/m/Y H:i" }}
+                    <div style="margin-top: 5px;">
+                        <a href="{% url 'eventi:dettaglio_evento' evento.id %}" style="padding: 5px; background-color: #2ecc71; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9em;">Vedi Info</a>
+
+                        {% if evento.id in id_eventi_iscritti %}
+                            <span style="color: green; margin-left: 10px; font-weight: bold;">Già Iscritto</span>
+                        {% else %}
+                            <a href="{% url 'prenotazioni:prenota_evento' evento.id %}" style="padding: 5px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9em; margin-left: 5px;">Iscriviti</a>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nessun evento trovato con questo titolo.</p>
+        {% endif %}
+        <hr>
+    {% endif %}
+
+    <h3>Gli Eventi a cui sei Iscritto</h3>
+    {% if eventi_iscritti %}
+        <ul>
+        {% for evento in eventi_iscritti %}
+            <li style="margin-bottom: 15px;">
+                <strong>{{ evento.titolo }}</strong> - {{ evento.data_ora|date:"d/m/Y H:i" }}
+                <div style="margin-top: 5px;">
+                    <a href="{% url 'eventi:dettaglio_evento' evento.id %}" style="padding: 5px; background-color: #2ecc71; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9em;">Vedi Info</a>
+                    <a href="{% url 'prenotazioni:cancella_prenotazione' evento.id %}" style="padding: 5px; background-color: #7f8c8d; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9em; margin-left: 5px;">Disiscriviti</a>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Non sei iscritto a nessun evento al momento.</p>
+    {% endif %}
+
+{% endif %}
+{% endblock %}
