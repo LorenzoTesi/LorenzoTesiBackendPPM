@@ -2,16 +2,11 @@ from django.db import models
 
 # Create your models here.
 from django.contrib.auth.models import AbstractUser
-from django.db import models
 
 class CustomUser(AbstractUser):
     is_organizer = models.BooleanField(
         default=False,
-        help_text="Indica se l'utente può creare e gestire i propri eventi."
-    )
-    is_attendee = models.BooleanField(
-        default=True,
-        help_text="Indica se l'utente può iscriversi agli eventi."
+        help_text="Indica se l'utente è un Organizzatore, se deselezionato è un mero partecipante."
     )
 
     def __str__(self):
