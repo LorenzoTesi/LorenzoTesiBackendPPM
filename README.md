@@ -1,4 +1,15 @@
-superuser admin, password admin123
+Event Management System
+studente: Lorenzo Tesi matricola: 7149989
+
+Full-stack Web application
+Framework usato: Django
+L'applicazione è un gestore di eventi, l'utente inserisce le credenziali e viene autenticato dal sistema, oppure si registra ( ci si può registrare solo come partecipante).
+Esistono due tipi di profili: partecipante e organizzatore, la pagina varia in base a quale dei due profili è entrato nel sistema.
+Partecipante può cercare un evento, visualizzarne le info ed iscriversi. Oppure cancellare una sua prenotazione.
+Organizzatore può creare un evento, cercare un evento per vederne le info e i partecipanti iscritti, oppure cancellare quelli creati da lui in precedenza.
+
+
+superuser: admin, password: admin123
 
 profili organizzatore:
 username: Organizzatore1 , pw: Delfino03
