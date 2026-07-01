@@ -13,8 +13,8 @@ from .models import Prenotazione
 def prenota_evento_view(request, evento_id):
     evento = get_object_or_404(Evento, id=evento_id)
 
-    if request.user.is_organizer:
-        messages.error(request, "Gli organizzatori non possono prenotarsi agli eventi")
+    if request.user == evento.organizzatore:
+        messages.error(request, "Non puoi iscriverti ad un evento da te organizzato")
         return redirect('eventi:dettaglio_evento', pk=evento.id)
 
     #controllo se l'utente è già iscritto

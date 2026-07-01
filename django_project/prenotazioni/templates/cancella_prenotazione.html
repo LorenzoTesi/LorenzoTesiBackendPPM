@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Conferma Disiscrizione{% endblock %}
+
+{% block content %}
+<h2>Sei sicuro di non voler partecipare all'evento?</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" style="background-color: #c0392b; color: white;">Sì, cancella definitivamente</button>
+    <a href="{% url 'eventi:lista_eventi' %}" style="margin-left: 15px;">No, torna indietro</a>
+</form>
+{% endblock %}

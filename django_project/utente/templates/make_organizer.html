@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Gestione Organizzatori</h2>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+
+<div class="row">
+  <div class="col">
+    <h4>Promuovi un utente esistente</h4>
+    <form method="post">
+      {% csrf_token %}
+      {{ promote_form.as_p }}
+      <button type="submit" name="promote_submit">Rendi organizzatore</button>
+    </form>
+  </div>
+
+  <div class="col">
+    <h4>Crea un nuovo organizzatore</h4>
+    <form method="post">
+      {% csrf_token %}
+      {{ create_form.as_p }}
+      <button type="submit" name="create_submit">Crea organizzatore</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
