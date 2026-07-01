@@ -10,6 +10,7 @@ from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from .models import CustomUser
+#TODO aggiornare il readme e magari mettere padssword più profesionali
 
 # Form registrazione
 class CustomUserCreationForm(UserCreationForm):
