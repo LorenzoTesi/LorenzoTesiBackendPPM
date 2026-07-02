@@ -10,7 +10,7 @@ app_name = 'utente'
 urlpatterns = [
     path('register/', views.RegisterView.as_view(), name='register'),
     path('login/', views.ParticipantLoginView.as_view(),
-         name='login_attendee'),
+         name='login'),
     path('organizzatore/login/', views.OrganizerLoginView.as_view(),
          name='login_organizer'),
     path('logout/', views.logout_view, name='logout'),
