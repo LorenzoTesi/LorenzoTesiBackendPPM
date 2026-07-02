@@ -47,7 +47,7 @@ class OrganizerAuthForm(AuthenticationForm):
 # LoginView per partecipanti
 class ParticipantLoginView(LoginView):
     form_class = ParticipantAuthForm
-    template_name = 'utente/login_attendee.html'
+    template_name = 'login_attendee.html'
 
     def get_success_url(self):
         return reverse_lazy('eventi:lista_eventi')
@@ -56,7 +56,7 @@ class ParticipantLoginView(LoginView):
 # LoginView per organizzatori
 class OrganizerLoginView(LoginView):
     form_class = OrganizerAuthForm
-    template_name = 'utente/login_organizer.html'
+    template_name = 'login_organizer.html'
 
     def get_success_url(self):
         return reverse_lazy('eventi:lista_organizzatore')
@@ -64,7 +64,7 @@ class OrganizerLoginView(LoginView):
 
 class RegisterView(CreateView):
     form_class = CustomUserCreationForm
-    template_name = 'utente/register.html'
+    template_name = 'register.html'
     success_url = reverse_lazy('utente:login_attendee')
 
 
@@ -82,7 +82,7 @@ class UserUpdateForm(forms.ModelForm):
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = CustomUser
     form_class = UserUpdateForm
-    template_name = 'utente/update_profile.html'
+    template_name = 'update_profile.html'
     success_url = reverse_lazy('eventi:lista_eventi')
 
     # l'utente può modificare solo se stesso
@@ -96,7 +96,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 class UserDeleteView(LoginRequiredMixin, DeleteView):
     model = CustomUser
-    template_name = 'utente/delete_confirm.html'
+    template_name = 'delete_confirm.html'
 
     def get_success_url(self):
         messages.warning(self.request, "Il tuo account è stato eliminato definitivamente.")
@@ -134,7 +134,7 @@ class OrganizerCreationForm(UserCreationForm):
         return user
 
 class MakeOrganizerView(LoginRequiredMixin, UserPassesTestMixin, View):
-    template_name = 'utente/make_organizer.html'
+    template_name = 'make_organizer.html'
 
     def test_func(self):
         # solo un organizzatore può accedere a questa pagina
