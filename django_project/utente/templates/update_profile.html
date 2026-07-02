@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Modifica Profilo{% endblock %}
+
+{% block content %}
+<h2>Modifica il tuo profilo</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salva modifiche</button>
+</form>
+
+<p style="margin-top: 30px;">
+    <a href="{% url 'eventi:lista_eventi' %}">← Torna alla Dashboard</a>
+</p>
+
+<hr style="margin: 30px 0;">
+
+<h3 style="color: #c0392b;">Zona pericolosa</h3>
+<p>Eliminare l'account è un'operazione irreversibile.</p>
+<a href="{% url 'utente:delete_account' %}" style="padding: 10px; background-color: #c0392b; color: white; text-decoration: none; border-radius: 4px;">Elimina il mio account</a>
+{% endblock %}

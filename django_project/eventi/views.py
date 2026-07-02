@@ -65,7 +65,7 @@ class EventoDetailView(LoginRequiredMixin, DetailView):
             prenotazioni = Prenotazione.objects.filter(evento=evento).select_related('utente')
             context['iscritti_username'] = [p.utente.username for p in prenotazioni]
         else:
-            context['gia_prenotato'] = Prenotazione.object.iscritti.filter(utente=user, evento=evento).exists()
+            context['gia_prenotato'] = Prenotazione.objects.filter(utente=user, evento=evento).exists()
         return context
 
 
@@ -112,7 +112,7 @@ class EventoUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
 
 class EventoDeleteView(LoginRequiredMixin, OwnerRequiredMixin, DeleteView):
     model = Evento
-    template_name = 'conferma_elimina.html'
+    template_name = 'cancella_evento.html'
     success_url = reverse_lazy('eventi:lista_eventi')
 
     def delete(self, request, *args, **kwargs):

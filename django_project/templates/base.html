@@ -10,9 +10,10 @@
         <nav>
             <strong>Event System</strong> |
             {% if user.is_authenticated %}
-                <span>Ciao, <strong>{{ user.username }}</strong>
-                    ({% if user.is_organizer %}Organizzatore{% else %}Partecipante{% endif %})
+                <span>Ciao,{% if user.is_organizer %}Organizzatore{% else %}Partecipante{% endif %}
+                    <strong>{{ user.username }}</strong>
                 </span> |
+                <a href="{% url 'utente:update_profile' %}">Profilo</a> |
                 <a href="{% url 'eventi:lista_eventi' %}">Dashboard</a> |
                 <a href="{% url 'utente:logout' %}">Logout</a>
             {% else %}

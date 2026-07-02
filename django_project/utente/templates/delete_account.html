@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Conferma Eliminazione Account{% endblock %}
+
+{% block content %}
+<h2>Sei sicuro di voler eliminare il tuo account?</h2>
+<p>Stai per rimuovere definitivamente l'account: <strong>{{ object.username }}</strong></p>
+<p style="color: red;">Questa operazione è irreversibile e cancellerà anche tutte le tue prenotazioni.</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" style="background-color: #c0392b; color: white;">Sì, elimina definitivamente</button>
+    <a href="{% url 'utente:update_profile' %}" style="margin-left: 15px;">No, torna indietro</a>
+</form>
+{% endblock %}

@@ -95,7 +95,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 class UserDeleteView(LoginRequiredMixin, DeleteView):
     model = CustomUser
-    template_name = 'delete_confirm.html'
+    template_name = 'delete_account.html'
 
     def get_success_url(self):
         messages.warning(self.request, "Il tuo account è stato eliminato definitivamente.")
