@@ -71,7 +71,7 @@ class RegisterView(CreateView):
 def logout_view(request):
     logout(request)
     messages.info(request, "Hai effettuato il logout.")
-    return redirect('utente:login_partecipante')
+    return redirect('utente:login_attendee')
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
