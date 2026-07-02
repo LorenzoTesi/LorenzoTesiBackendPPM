@@ -15,7 +15,7 @@ from .models import Evento
 
 class EventoListView(LoginRequiredMixin, ListView):
     model = Evento
-    template_name = 'eventi/lista_eventi.html'
+    template_name = 'lista_eventi.html'
     context_object_name = 'eventi'
     def get_queryset(self):
         user = self.request.user
@@ -51,7 +51,7 @@ class EventoListView(LoginRequiredMixin, ListView):
 
 class EventoDetailView(LoginRequiredMixin, DetailView):
     model = Evento
-    template_name = 'eventi/dettaglio_evento.html'
+    template_name = 'dettaglio_evento.html'
     context_object_name = 'evento'
 
     def get_context_data(self, **kwargs):
@@ -80,7 +80,7 @@ class OrganizerRequiredMixin(UserPassesTestMixin):
 
 class EventoCreateView(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
     model = Evento
-    template_name = 'eventi/form_evento.html'
+    template_name = 'form_evento.html'
     fields = ['titolo', 'descrizione', 'data_ora', 'luogo', 'capienza_massima']
     success_url = reverse_lazy('eventi:lista_eventi')
 
@@ -102,7 +102,7 @@ class OwnerRequiredMixin(UserPassesTestMixin):
 #solo chi ha creato l'evento può modificarlo o cancellarlo
 class EventoUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
     model = Evento
-    template_name = 'eventi/form_evento.html'
+    template_name = 'form_evento.html'
     fields = ['titolo', 'descrizione', 'data_ora', 'luogo', 'capienza_massima']
 
     def get_success_url(self):
@@ -112,7 +112,7 @@ class EventoUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
 
 class EventoDeleteView(LoginRequiredMixin, OwnerRequiredMixin, DeleteView):
     model = Evento
-    template_name = 'eventi/conferma_elimina.html'
+    template_name = 'conferma_elimina.html'
     success_url = reverse_lazy('eventi:lista_eventi')
 
     def delete(self, request, *args, **kwargs):

@@ -47,7 +47,7 @@ class OrganizerAuthForm(AuthenticationForm):
 # LoginView per partecipanti
 class ParticipantLoginView(LoginView):
     form_class = ParticipantAuthForm
-    template_name = 'login_attendee.html'
+    template_name = 'login.html'
 
     def get_success_url(self):
         return reverse_lazy('eventi:lista_eventi')
@@ -59,19 +59,18 @@ class OrganizerLoginView(LoginView):
     template_name = 'login_organizer.html'
 
     def get_success_url(self):
-        return reverse_lazy('eventi:lista_organizzatore')
-
+        return reverse_lazy('eventi:lista_eventi')
 
 class RegisterView(CreateView):
     form_class = CustomUserCreationForm
     template_name = 'register.html'
-    success_url = reverse_lazy('utente:login_attendee')
+    success_url = reverse_lazy('utente:login')
 
 
 def logout_view(request):
     logout(request)
     messages.info(request, "Hai effettuato il logout.")
-    return redirect('utente:login_attendee')
+    return redirect('utente:login')
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
@@ -100,7 +99,7 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         messages.warning(self.request, "Il tuo account è stato eliminato definitivamente.")
-        return reverse_lazy('utente:login_attendee')
+        return reverse_lazy('utente:login')
 
     #l'utente può eliminare solo se stesso
     def get_object(self, queryset=None):
